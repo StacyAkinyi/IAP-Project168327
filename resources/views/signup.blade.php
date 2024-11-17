@@ -2,10 +2,11 @@
 @section('title', 'Signup')
 @section('content')
 <div class="container">
-<form class="ms-auto me-auto mt-auto" style="width: 500px;">
+<form action="{{route('signup.post')}}" method="POST" class="ms-auto me-auto mt-auto" style="width: 500px;">
+    @csrf
   <div class="mb-3">
     <label class="form-label">Full Name</label>
-    <input type="text" class="form-control" name="fullname">
+    <input type="text" class="form-control" name="name">
     
   </div>
   <div class="mb-3">
