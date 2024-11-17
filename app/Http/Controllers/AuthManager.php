@@ -13,9 +13,15 @@ class AuthManager extends Controller
         return view('welcome');
     }
     public function login(){
+        if(Auth::check()){
+            return redirect(route('welcome'));
+        }
         return view('login');
     }
     public function signup(){
+        if(Auth::check()){
+            return redirect(route('welcome'));
+        }
         return view('signup');
     }
     public function loginPost(Request $request){
@@ -35,6 +41,7 @@ class AuthManager extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
+            'confirm_password' => 'required|same:password',
         ]);
         $data['name'] = $request->name;
         $data['email'] = $request->email;
@@ -42,8 +49,14 @@ class AuthManager extends Controller
         $user = User::create($data);
 
         if(!$user){
-            return redirect(route(signup))->with('error', 'User not created');
+            return redirect(route('signup'))->with('error', 'User not created');
         }
-        return redirect(route(login))->with('success', 'Registration successful. Login to continue');
+        return redirect(route('login'))->with('success', 'Registration successful. Login to continue');
+    }
+
+    public function logout(){
+        Session::flush();
+        Auth::logout();
+        return redirect(route('welcome'));
     }
 }

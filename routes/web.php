@@ -15,3 +15,5 @@ Route::post('/signup', [AuthManager::class, 'signupPost'])->name('signup.post');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::get('/logout', [AuthManager::class, 'logout'])->name('logout');
